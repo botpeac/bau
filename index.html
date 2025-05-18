@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NDJSON Viewer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    #content {
+      max-height: 60vh;
+      overflow-y: auto;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+    .post {
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    .post h5 {
+      margin-bottom: 0.3rem;
+    }
+    .pagination {
+      justify-content: center;
+    }
+    #loadingSpinner {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="mb-4">NDJSON Viewer</h1>
+
+  <div class="mb-3">
+    <label for="fileInput" class="form-label">Choose NDJSON file</label>
+    <input class="form-control" type="file" id="fileInput" accept=".ndjson,application/json" aria-describedby="fileHelp" />
+    <div id="fileHelp" class="form-text">Upload your NDJSON file to view posts.</div>
+  </div>
+
+  <button id="loadButton" class="btn btn-primary mb-3" disabled>Load File</button>
+  <span id="loadingSpinner" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+
+  <div class="mb-3 form-check form-check-inline">
+    <input type="checkbox" class="form-check-input" id="showTextPosts" checked />
+    <label class="form-check-label" for="showTextPosts">Show Text Posts</label>
+  </div>
+  <div class="mb-3 form-check form-check-inline">
+    <input type="checkbox" class="form-check-input" id="showLinkPosts" checked />
+    <label class="form-check-label" for="showLinkPosts">Show Link Posts</label>
+  </div>
+
+  <div class="mb-3">
+    <label for="sortBy" class="form-label">Sort by:</label>
+    <select id="sortBy" class="form-select w-auto d-inline-block" aria-label="Sort posts">
+      <option value="dateDesc" selected>Date (Newest)</option>
+      <option value="dateAsc">Date (Oldest)</option>
+      <option value="scoreDesc">Score (High to Low)</option>
+      <option value="scoreAsc">Score (Low to High)</option>
+      <option value="textLength">Text Length</option>
+    </select>
+  </div>
+
+  <div id="postCount" class="mb-3 text-muted"></div>
+
+  <div id="content" role="list" tabindex="0" aria-live="polite" aria-label="List of posts"></div>
+
+  <nav aria-label="Post navigation">
+    <ul class="pagination mt-3">
+      <li class="page-item">
+        <button id="prevPage" class="page-link" aria-label="Previous page" disabled>← Prev</button>
+      </li>
+      <li class="page-item disabled">
+        <span id="pageInfo" class="page-link" aria-live="polite">Page 1 of 1</span>
+      </li>
+      <li class="page-item">
+        <button id="nextPage" class="page-link" aria-label="Next page" disabled>Next →</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
